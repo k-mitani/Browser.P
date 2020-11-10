@@ -2,7 +2,6 @@ package net.i09158knct.android.browserp.activities
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
@@ -15,13 +14,12 @@ import android.webkit.WebView
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupMenu
-import androidx.core.view.contains
-import net.i09158knct.android.browserp.R
 import kotlinx.android.synthetic.main.activity_main.*
+import net.i09158knct.android.browserp.R
 import net.i09158knct.android.browserp.Util
 import net.i09158knct.android.browserp.browser.Browser
 import net.i09158knct.android.browserp.browser.Tab
-import java.lang.Exception
+import net.i09158knct.android.browserp.views.SwipeLinearLayout
 import kotlin.math.max
 import kotlin.math.min
 
@@ -37,10 +35,6 @@ class MainActivity : Activity() {
         }
 
         override fun onForegroundTabChanged(oldTab: Tab?, newTab: Tab) {
-            if (oldTab != null) {
-                grpWebViewContainer.removeView(oldTab.webview)
-                unregisterForContextMenu(oldTab.webview)
-            }
             grpWebViewContainer.addView(
                 newTab.webview,
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -48,6 +42,15 @@ class MainActivity : Activity() {
             )
             newTab.webview.requestFocus()
             registerForContextMenu(newTab.webview)
+
+            // スワイプでタブを切り替えるときにちらつくのを防ぐために
+            // 適当に待機してから削除する。
+            Handler().postDelayed({
+                if (oldTab != null) {
+                    grpWebViewContainer.removeView(oldTab.webview)
+                    unregisterForContextMenu(oldTab.webview)
+                }
+            }, 10)
         }
 
         override fun onTitleChanged(tab: Tab, title: String) {
@@ -256,7 +259,9 @@ class MainActivity : Activity() {
                 // 選ばれたタブをフォアグラウンドにする。
                 val tabIndex = data!!.getIntExtra(TabListActivity.EXTRA_SELECTED_TAB_INDEX, 0)
                 val tab = browser.tabs[tabIndex]
-                browser.changeForeground(tab)
+                if (tab != browser.foregroundTab) {
+                    browser.changeForeground(tab)
+                }
             }
             // 戻るボタンなどで戻ってきた場合はなにもしない。
 
@@ -436,6 +441,30 @@ class MainActivity : Activity() {
         var popup: PopupMenu? = null
 
         fun initialize() {
+            // 左右にスワイプされたら前後のタブに切り替える。
+            grpButtons.onSwipeListener = object : SwipeLinearLayout.OnSwipeListener {
+                override fun onSwipe(
+                    view: View,
+                    ev1: MotionEvent?,
+                    ev2: MotionEvent?,
+                    vx: Float,
+                    vy: Float
+                ): Boolean {
+                    val tabOffset =
+                        if (vx < 0) +1
+                        else -1
+                    val currentTabIndex = browser.tabs.indexOf(browser.foregroundTab)
+                    val targetTabIndex = currentTabIndex + tabOffset
+                    // 範囲外なら何もしない。
+                    if (targetTabIndex < 0 || targetTabIndex >= browser.tabs.size) return true
+                    // タブを切り替える。
+                    val targetTab = browser.tabs[targetTabIndex]
+                    browser.changeForeground(targetTab)
+                    Util.showToast("Tab${currentTabIndex + 1}→Tab${targetTabIndex + 1}")
+                    return true
+                }
+            }
+
             btnBack.setOnClickListener { browser.foregroundTab!!.webview.goBack() }
             btnForward.setOnClickListener { browser.foregroundTab!!.webview.goForward() }
             btnReload.setOnClickListener { browser.foregroundTab!!.webview.reload() }
@@ -450,6 +479,11 @@ class MainActivity : Activity() {
             btnTab.setOnClickListener {
                 val intent = Intent(applicationContext, TabListActivity::class.java)
                 startActivityForResult(intent, REQUEST_SELECT_TAB)
+            }
+            // 長押しなら新しいタブを開く。
+            btnTab.setOnLongClickListener {
+                browser.openNewTab(browser.homeUrl)
+                return@setOnLongClickListener true
             }
             btnMenu.setOnClickListener {
                 // ツールバーが表示中なら閉じる。

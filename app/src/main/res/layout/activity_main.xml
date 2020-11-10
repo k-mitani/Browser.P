@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <LinearLayout
+    <FrameLayout
+        android:background="#888888"
         android:id="@+id/grpWebViewContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -106,7 +107,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <net.i09158knct.android.browserp.views.SwipeLinearLayout
         android:id="@+id/grpButtons"
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
@@ -180,6 +181,6 @@
             android:layout_weight="1"
             android:text="…" />
 
-    </LinearLayout>
+    </net.i09158knct.android.browserp.views.SwipeLinearLayout>
 
 </RelativeLayout>
