@@ -1,5 +1,26 @@
 <resources>
     <string name="app_name">Browser.P</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="hello_world">Hello Square World!</string>
+    <string name="title_activity_main">Browser.P</string>
+    <string name="menuShare">Share</string>
+    <string name="menuOpenInOtherBrowser">Open in other browser</string>
+    <string name="menuOpenInNewTab">Open in new tab</string>
+    <string name="menuOpenInBackground">Open in background</string>
+    <string name="menuCopyUrl">Copy address</string>
+    <string name="tabClosed">Closed!</string>
+    <string name="copied">Copied!</string>
+    <string name="menuJsEnable">Enable JavaScript</string>
+    <string name="menuJsDisable">Disable JavaScript</string>
+    <string name="menuImageEnable">Enable laoding image</string>
+    <string name="menuImageDisable">Disable loading image</string>
+    <string name="clear">Clear</string>
+    <string name="paste">Paste</string>
+    <string name="enter">Enter</string>
+    <string name="loading">Loading…</string>
+    <string name="tabList">Tab List</string>
+    <string name="restoreClosedTab">Restore closed tab</string>
+    <string name="addNewTab">Add new tab</string>
+    <string name="menuImageOpenInNewTab">Open image in new tab</string>
+    <string name="menuImageOpenInBackground">Open image in background</string>
+    <string name="menuImageOpenInOtherBrowser">Open image in other browser</string>
+    <string name="menuImageCopyUrl">Copy image address</string>
 </resources>

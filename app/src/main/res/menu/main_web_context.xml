@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuShare"
+        android:title="@string/menuShare" />
+
+    <group android:id="@+id/menugAnchor">
+        <item
+            android:id="@+id/menuOpenInNewTab"
+            android:title="@string/menuOpenInNewTab" />
+        <item
+            android:id="@+id/menuOpenInBackground"
+            android:title="@string/menuOpenInBackground" />
+        <item
+            android:id="@+id/menuOpenInOtherBrowser"
+            android:title="@string/menuOpenInOtherBrowser" />
+    </group>
+    <item
+        android:id="@+id/menuCopyUrl"
+        android:title="@string/menuCopyUrl" />
+
+    <group android:id="@+id/menugImage">
+        <item
+            android:id="@+id/menuImageOpenInNewTab"
+            android:title="@string/menuImageOpenInNewTab" />
+        <item
+            android:id="@+id/menuImageOpenInBackground"
+            android:title="@string/menuImageOpenInBackground" />
+        <item
+            android:id="@+id/menuImageOpenInOtherBrowser"
+            android:title="@string/menuImageOpenInOtherBrowser" />
+        <item
+            android:id="@+id/menuImageCopyUrl"
+            android:title="@string/menuImageCopyUrl" />
+    </group>
+
+    <group android:id="@+id/menugPhone" />
+    <group android:id="@+id/menugMail" />
+    <group android:id="@+id/menugGeo" />
+
+</menu>
