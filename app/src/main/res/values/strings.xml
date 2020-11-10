@@ -6,8 +6,8 @@
     <string name="menuOpenInNewTab">Open in new tab</string>
     <string name="menuOpenInBackground">Open in background</string>
     <string name="menuCopyUrl">Copy address</string>
-    <string name="tabClosed">Closed!</string>
-    <string name="copied">Copied!</string>
+    <string name="tabClosed">Closed.</string>
+    <string name="copied">Copied.</string>
     <string name="menuJsEnable">Enable JavaScript</string>
     <string name="menuJsDisable">Disable JavaScript</string>
     <string name="menuImageEnable">Enable laoding image</string>

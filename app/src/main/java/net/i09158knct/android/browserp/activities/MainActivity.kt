@@ -227,7 +227,10 @@ class MainActivity : Activity() {
 
         when (item.itemId) {
             R.id.menuShare -> Util.shareUrl(this, defaultValue)
-            R.id.menuOpenInNewTab -> browser.openNewTab(url!!)
+            R.id.menuOpenInNewTab -> {
+                browser.openNewTab(url!!)
+                toolbar.visibility = View.VISIBLE
+            }
             R.id.menuOpenInBackground -> browser.addNewTab(url!!)
             R.id.menuOpenInOtherBrowser -> Util.openInOtherBrowser(this, url!!)
             R.id.menuCopyUrl -> {
@@ -440,7 +443,7 @@ class MainActivity : Activity() {
             btnShare.setOnClickListener {
                 Util.shareUrl(
                     this@MainActivity,
-                    browser.foregroundTab!!.webview.url
+                    browser.foregroundTab!!.url
                 )
             }
             btnBookmark.setOnClickListener { }
@@ -467,11 +470,11 @@ class MainActivity : Activity() {
                             when (it.itemId) {
                                 R.id.menuShare -> Util.shareUrl(
                                     this@MainActivity,
-                                    browser.foregroundTab!!.webview.url
+                                    browser.foregroundTab!!.url
                                 )
                                 R.id.menuOpenInOtherBrowser -> Util.openInOtherBrowser(
                                     this@MainActivity,
-                                    browser.foregroundTab!!.webview.url
+                                    browser.foregroundTab!!.url
                                 )
                                 R.id.menuJsEnable -> browser.isJsEnabled = true
                                 R.id.menuJsDisable -> browser.isJsEnabled = false

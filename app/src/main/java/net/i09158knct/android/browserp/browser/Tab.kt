@@ -16,6 +16,8 @@ class Tab(
     userAgent: String?
 ) {
     val webview = WebView(context)
+    var url: String = ""
+    var title: String = ""
 
     init {
         webview.webChromeClient = CustomWebChromeClient()
@@ -84,7 +86,8 @@ class Tab(
     inner class CustomWebChromeClient : WebChromeClient() {
         override fun onReceivedTitle(view: WebView?, title: String?) {
             Log.v(Util.tag, "${title}")
-            browser.listeners.forEach { it.onTitleChanged(this@Tab, title ?: "(no title)") }
+            this@Tab.title = title ?: "(no title)"
+            browser.listeners.forEach { it.onTitleChanged(this@Tab, this@Tab.title) }
         }
 
         override fun onProgressChanged(view: WebView, newProgress: Int) {
@@ -96,11 +99,13 @@ class Tab(
     inner class CustomWebViewClient : WebViewClient() {
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             Log.v(Util.tag, "url: ${url}")
+            this@Tab.url = url
             return false
         }
 
         override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
             Log.v(Util.tag, "url: $url")
+            this@Tab.url = url
             browser.listeners.forEach {
                 it.onPageStarted(this@Tab)
                 it.onUrlChanged(this@Tab, url)
@@ -111,6 +116,7 @@ class Tab(
 
         override fun onPageFinished(view: WebView, url: String) {
             Log.v(Util.tag, "url: $url")
+            this@Tab.url = url
             browser.listeners.forEach {
                 it.onPageFinished(this@Tab)
                 it.onReloadStopStateChanged(this@Tab, false)

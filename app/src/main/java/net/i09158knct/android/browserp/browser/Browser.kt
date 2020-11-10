@@ -48,11 +48,11 @@ class Browser(val context: Context) {
         val setIndexAndUrlAndTitle = tabs
             .mapIndexed { i, tab ->
                 // タイトルが長すぎるなら省略する。
-                var title = tab.webview.title
+                var title = tab.title
                 if (title.length > 20) {
                     title = title.take(20) + Typography.ellipsis
                 }
-                "$i,${tab.webview.url},${title}"
+                "$i,${tab.url},${title}"
             }
             .toSet()
 
@@ -90,8 +90,8 @@ class Browser(val context: Context) {
         // コールバックを呼び出す。
         listeners.forEach {
             it.onForegroundTabChanged(oldTab, tab)
-            it.onTitleChanged(tab, tab.webview.title)
-            it.onUrlChanged(tab, tab.webview.url)
+            it.onTitleChanged(tab, tab.title)
+            it.onUrlChanged(tab, tab.url)
             it.onProgressChanged(tab, tab.webview.progress)
             it.onBackForwardStateChanged(tab)
         }
@@ -100,6 +100,7 @@ class Browser(val context: Context) {
     fun openNewTab(url: String): Tab {
         val tab = addNewTab()
         tab.webview.loadUrl(url)
+        tab.url = url
         changeForeground(tab)
         return tab
     }
@@ -108,6 +109,7 @@ class Browser(val context: Context) {
         val tab = Tab(context, this, isJsEnabled, isImageEnabled, null)
         tabs.add(tab)
         listeners.forEach { it.onTabCountChanged(tabs.count()) }
+        if (url != null) tab.webview.loadUrl(url)
         return tab
     }
 

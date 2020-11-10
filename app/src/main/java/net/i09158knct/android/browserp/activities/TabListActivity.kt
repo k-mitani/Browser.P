@@ -108,8 +108,8 @@ class TabListAdapter(context: Context, val tabs: List<Tab>, val listener: IEvent
         val view = convertView ?: View.inflate(context, R.layout.item_tab, null)
         val tab = getItem(position)!!
         return view.apply {
-            txtTitle.text = tab.webview.title
-            txtUrl.text = tab.webview.url
+            txtTitle.text = tab.title
+            txtUrl.text = tab.url
             grpTabSelectArea.setOnClickListener { listener.onClickTab(tab) }
             btnClose.setOnClickListener { listener.onClickTabClose(tab) }
         }
