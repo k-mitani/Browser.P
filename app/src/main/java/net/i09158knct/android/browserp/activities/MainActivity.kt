@@ -118,6 +118,7 @@ class MainActivity : Activity() {
     lateinit var browser: Browser
     lateinit var toolbarHelper: ToolBarHelper
     lateinit var bottombarHelper: BottomBarHelper
+    val browserEventListener = BrowserEventListener()
 
     private var selectedWebNodeExtra: String? = null
     private var selectedWebNodeUrl: String? = null
@@ -130,9 +131,8 @@ class MainActivity : Activity() {
 
         // ブラウザの初期化を行う。
         browser = Browser.getInstance(applicationContext)
-        browser.listeners.add(BrowserEventListener())
-        browser.restoreState()
-
+        browser.listeners.add(browserEventListener)
+        browser.initializeIfNeeded()
 
         // 画面の初期化を行う。
         toolbarHelper = ToolBarHelper()
@@ -152,6 +152,11 @@ class MainActivity : Activity() {
 
     override fun onDestroy() {
         toolbarHelper.onDestroy()
+        browser.listeners.remove(browserEventListener)
+        val foregroundWebView = browser.foregroundTab?.webview
+        if (foregroundWebView?.parent != null) {
+            (foregroundWebView.parent as ViewGroup).removeView(foregroundWebView)
+        }
         super.onDestroy()
     }
 

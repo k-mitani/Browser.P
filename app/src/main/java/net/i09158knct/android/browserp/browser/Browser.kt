@@ -35,6 +35,13 @@ class Browser(val context: Context) {
     val tabs = mutableListOf<Tab>()
     val listeners = mutableListOf<IEventListener>()
     var foregroundTab: Tab? = null
+    private  var initialized = false
+
+    fun initializeIfNeeded() {
+        if (initialized) return
+        restoreState()
+        initialized = true
+    }
 
     fun saveState() {
         // 現在のタブ一覧を"タブ番号,URL,タイトル"のSetに変換する。
