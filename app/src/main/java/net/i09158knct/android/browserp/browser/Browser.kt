@@ -75,10 +75,13 @@ class Browser(val context: Context) {
         val urls = data
             .map { it.split(",") }
             .sortedBy { it[0].toInt() }
-            .map { it[1] }
-        if (urls.isNotEmpty()) Log.d(Util.tag, "restored\n" + urls.reduce { s, acc -> "$s\n$acc" })
-        urls.forEach {
-            addNewTab().apply { webview.loadUrl(it) }
+            .map { object { val url = it[1]; val title = it[2] } }
+        if (urls.isNotEmpty()) Log.d(Util.tag, "restored\n" + urls
+            .map { x -> x.url }
+            .reduce { url, acc -> "$url\n$acc" })
+        urls.forEachIndexed { i, x ->
+            // とりあえず10タブ以上は遅延初期化にする
+            addNewTab().apply { setInitialUrl(x.url, x.title, i >= 10) }
         }
     }
 

@@ -18,6 +18,7 @@ class Tab(
     val webview = WebView(context)
     var url: String = ""
     var title: String = ""
+    var isInitializationDeferred: Boolean = false
 
     init {
         webview.webChromeClient = CustomWebChromeClient()
@@ -82,6 +83,24 @@ class Tab(
             setUserAgentString(userAgent)
         }
     }
+
+    fun setInitialUrl(url: String, title: String, defer: Boolean) {
+        this.url = url
+        this.title = title
+        if (defer) {
+            isInitializationDeferred = true
+        }
+        else {
+            webview.loadUrl(url)
+        }
+    }
+    fun startLoadingIfNeeded() {
+        if (isInitializationDeferred) {
+            webview.loadUrl(url)
+            isInitializationDeferred = false
+        }
+    }
+
 
     inner class CustomWebChromeClient : WebChromeClient() {
         override fun onReceivedTitle(view: WebView?, title: String?) {

@@ -44,6 +44,9 @@ class MainActivity : Activity() {
             newTab.webview.requestFocus()
             registerForContextMenu(newTab.webview)
 
+            // まだ読み込み開始されていなければ読み込みを行う。
+            newTab.startLoadingIfNeeded()
+
             // スワイプでタブを切り替えるときにちらつくのを防ぐために
             // 適当に待機してから削除する。
             Handler().postDelayed({
