@@ -20,6 +20,7 @@ import net.i09158knct.android.browserp.Util
 import net.i09158knct.android.browserp.browser.Browser
 import net.i09158knct.android.browserp.browser.Tab
 import net.i09158knct.android.browserp.views.SwipeLinearLayout
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
@@ -450,6 +451,9 @@ class MainActivity : Activity() {
                     vx: Float,
                     vy: Float
                 ): Boolean {
+                    // 上下の移動量の方が多ければ何もしない。
+                    if (abs(vx) < abs(vy)) return true
+
                     val tabOffset =
                         if (vx < 0) +1
                         else -1
@@ -460,7 +464,7 @@ class MainActivity : Activity() {
                     // タブを切り替える。
                     val targetTab = browser.tabs[targetTabIndex]
                     browser.changeForeground(targetTab)
-                    Util.showToast("Tab${currentTabIndex + 1}→Tab${targetTabIndex + 1}")
+                    Util.showToast(if (tabOffset > 0) "→" else "←")
                     return true
                 }
             }
