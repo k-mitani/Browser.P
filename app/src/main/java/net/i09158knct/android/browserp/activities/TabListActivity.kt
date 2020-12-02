@@ -3,20 +3,19 @@ package net.i09158knct.android.browserp.activities
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_tab_list.*
-import kotlinx.android.synthetic.main.item_tab.view.*
+import android.widget.Button
+import android.widget.TextView
 import net.i09158knct.android.browserp.R
 import net.i09158knct.android.browserp.Util
 import net.i09158knct.android.browserp.browser.Browser
 import net.i09158knct.android.browserp.browser.Tab
+import net.i09158knct.android.browserp.databinding.TabItemBinding
+import net.i09158knct.android.browserp.databinding.TabListActivityBinding
 
 class TabListActivity : Activity(), TabListAdapter.IEventListener {
     companion object {
@@ -24,24 +23,26 @@ class TabListActivity : Activity(), TabListAdapter.IEventListener {
     }
 
     lateinit var browser: Browser
+    lateinit var binding: TabListActivityBinding
     lateinit var adapter: TabListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tab_list)
+        binding = TabListActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         browser = Browser.getInstance(applicationContext)
         browser.listeners.add(BrowserEventListener())
 
         adapter = TabListAdapter(this, browser.tabs, this)
-        lstTab.adapter = adapter
+        binding.lstTab.adapter = adapter
 
-        btnAddNewTab.setOnClickListener {
+        binding.btnAddNewTab.setOnClickListener {
             val tab = browser.addNewTab()
             tab.webview.loadUrl(browser.homeUrl)
             adapter.notifyDataSetChanged()
         }
 
-        btnRestoreClosedTab.setOnClickListener {
+        binding.btnRestoreClosedTab.setOnClickListener {
             Util.showToast("TODO")
         }
     }
@@ -102,16 +103,16 @@ class TabListActivity : Activity(), TabListAdapter.IEventListener {
 }
 
 class TabListAdapter(context: Context, val tabs: List<Tab>, val listener: IEventListener) :
-    ArrayAdapter<Tab>(context, R.layout.item_tab, 0, tabs) {
+    ArrayAdapter<Tab>(context, R.layout.tab_item, 0, tabs) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?: View.inflate(context, R.layout.item_tab, null)
+        val view = convertView ?: TabItemBinding.inflate(LayoutInflater.from(context)).root
         val tab = getItem(position)!!
         return view.apply {
-            txtTitle.text = tab.title
-            txtUrl.text = tab.url
-            grpTabSelectArea.setOnClickListener { listener.onClickTab(tab) }
-            btnClose.setOnClickListener { listener.onClickTabClose(tab) }
+            view.findViewById<TextView>(R.id.txtTitle).text = tab.title
+            view.findViewById<TextView>(R.id.txtUrl).text = tab.url
+            view.findViewById<ViewGroup>(R.id.grpTabSelectArea).setOnClickListener { listener.onClickTab(tab) }
+            view.findViewById<Button>(R.id.btnClose).setOnClickListener { listener.onClickTabClose(tab) }
         }
     }
 
