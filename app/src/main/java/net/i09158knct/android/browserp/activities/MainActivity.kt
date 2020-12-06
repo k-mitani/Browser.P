@@ -311,6 +311,21 @@ class MainActivity : Activity() {
         }
     }
 
+    override fun onKeyLongPress(keyCode: Int, event: KeyEvent?): Boolean {
+        return if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 戻るボタンの長押しでタブを閉じる。
+            browser.closeTab(browser.foregroundTab!!)
+            Util.showToast(R.string.tabClosed)
+
+            // 全てのタブを閉じた場合はアプリを閉じる。
+            if (browser.tabs.isEmpty()) {
+                super.onBackPressed()
+            }
+            true
+        }
+        else super.onKeyLongPress(keyCode, event)
+    }
+
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             // 音量キーの操作でPageUp/PageDownする。
@@ -475,6 +490,16 @@ class MainActivity : Activity() {
             }
 
             binding.btnBack.setOnClickListener { browser.foregroundTab!!.webview.goBack() }
+            // 長押しならタブを閉じる。
+            binding.btnBack.setOnLongClickListener {
+                browser.closeTab(browser.foregroundTab!!)
+                Util.showToast(R.string.tabClosed)
+                // 全てのタブを閉じた場合はアプリを閉じる。
+                if (browser.tabs.isEmpty()) {
+                    onBackPressed()
+                }
+                return@setOnLongClickListener true
+            }
             binding.btnForward.setOnClickListener { browser.foregroundTab!!.webview.goForward() }
             binding.btnReload.setOnClickListener { browser.foregroundTab!!.webview.reload() }
             binding.btnStop.setOnClickListener { browser.foregroundTab!!.webview.stopLoading() }
