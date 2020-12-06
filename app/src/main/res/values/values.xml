@@ -7,6 +7,7 @@
     <color name="list_divider">#555555</color>
     <color name="button_no_focused">#cccccc</color>
     <color name="button_focused">#aaaaff</color>
+    <color name="button_disabled">#999999</color>
     <color name="edit_text_no_focused">#eeeeee</color>
     <color name="edit_text_pressed">#aaaaff</color>
     <color name="edit_text_focused">#ffffff</color>
@@ -37,9 +38,13 @@
         <item name="android:layout_margin">1.0dp</item>
     </style>
 
+<!--    buttonBarButtonStyle-->
     <style name="button.bottombar_button">
+        <item name="android:textSize">15sp</item>
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:layout_margin">2dp</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
     </style>
 </resources>

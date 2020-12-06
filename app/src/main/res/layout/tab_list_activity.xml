@@ -26,7 +26,8 @@
 
     <LinearLayout
         android:id="@+id/grpButtons"
-        style="?android:attr/buttonBarStyle"
+        android:background="#777"
+        android:padding="3dp"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
@@ -35,18 +36,12 @@
 
         <Button
             android:id="@+id/btnRestoreClosedTab"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@style/button.bottombar_button"
             android:text="@string/restoreClosedTab" />
 
         <Button
             android:id="@+id/btnAddNewTab"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@style/button.bottombar_button"
             android:text="@string/addNewTab" />
 
     </LinearLayout>

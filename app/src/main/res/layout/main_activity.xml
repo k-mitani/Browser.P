@@ -109,76 +109,58 @@
 
     <net.i09158knct.android.browserp.views.SwipeLinearLayout
         android:id="@+id/grpButtons"
-        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="#777"
+        android:padding="3dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnBack"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@style/button.bottombar_button"
             android:text="◀" />
 
         <Button
             android:id="@+id/btnForward"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@style/button.bottombar_button"
             android:text="▶" />
 
         <Button
             android:id="@+id/btnReload"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@style/button.bottombar_button"
+            android:textSize="25sp"
+            android:textAlignment="center"
+            android:paddingBottom="5dp"
             android:text="↻" />
 
         <Button
             android:id="@+id/btnStop"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@style/button.bottombar_button"
             android:text="✕"
             android:visibility="gone" />
 
         <Button
             android:id="@+id/btnShare"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@style/button.bottombar_button"
             android:text="S" />
 
         <Button
             android:id="@+id/btnBookmark"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@style/button.bottombar_button"
             android:text="B"
             android:visibility="gone" />
 
         <Button
             android:id="@+id/btnTab"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@style/button.bottombar_button"
             android:text="0" />
 
         <Button
             android:id="@+id/btnMenu"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@style/button.bottombar_button"
+            android:textSize="25sp"
+            android:paddingBottom="5dp"
             android:text="…" />
 
     </net.i09158knct.android.browserp.views.SwipeLinearLayout>
