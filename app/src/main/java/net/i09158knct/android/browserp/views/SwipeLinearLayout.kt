@@ -21,18 +21,18 @@ class SwipeLinearLayout : LinearLayout, GestureDetector.OnGestureListener {
     val gestureDetector = GestureDetector(context, this)
     var onSwipeListener: OnSwipeListener? = null
 
-    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         if (gestureDetector.onTouchEvent(ev)) return true
         return super.onInterceptTouchEvent(ev)
     }
 
-    override fun onScroll(p0: MotionEvent?, p1: MotionEvent?, p2: Float, p3: Float) = false
-    override fun onDown(p0: MotionEvent?) = false
-    override fun onShowPress(p0: MotionEvent?) {}
-    override fun onSingleTapUp(p0: MotionEvent?) = false
-    override fun onLongPress(p0: MotionEvent?) {}
+    override fun onScroll(p0: MotionEvent?, p1: MotionEvent, p2: Float, p3: Float) = false
+    override fun onDown(p0: MotionEvent) = false
+    override fun onShowPress(p0: MotionEvent) {}
+    override fun onSingleTapUp(p0: MotionEvent) = false
+    override fun onLongPress(p0: MotionEvent) {}
     override fun onFling(
-        event1: MotionEvent,
+        event1: MotionEvent?,
         event2: MotionEvent,
         velocityX: Float,
         velocityY: Float
