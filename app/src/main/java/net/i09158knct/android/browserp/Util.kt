@@ -18,12 +18,12 @@ object Util {
     var context: Context? = null
     fun showToast(text: String?): Unit {
         if (context == null) return
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
     fun showToast(id: Int): Unit {
         if (context == null) return
-        Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
     }
 
     val tag: String
