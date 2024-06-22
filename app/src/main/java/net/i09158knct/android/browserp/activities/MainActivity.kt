@@ -154,6 +154,14 @@ class MainActivity : Activity() {
         browser.openNewTab(initialUrl)
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        // タブが全部閉じられていた場合は新しくタブを開く。
+        if (browser.tabs.isEmpty()) {
+            browser.openNewTab(browser.homeUrl)
+        }
+    }
+
     override fun onPause() {
         super.onPause()
         browser.saveState()
