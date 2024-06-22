@@ -35,6 +35,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:visibility="gone"
             android:id="@+id/btnRestoreClosedTab"
             style="@style/button.bottombar_button"
             android:text="@string/restoreClosedTab" />
